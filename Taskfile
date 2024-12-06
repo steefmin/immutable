@@ -41,7 +41,7 @@ function project:git-config {
 ## Tests
 # =========================================================
 
-function task:test { ## This is a custom task definition
+function task:test { ## Run unit test suite
 	title "Running unit tests"
 	./vendor/bin/phpunit tests
 }
