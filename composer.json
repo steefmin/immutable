@@ -1,0 +1,28 @@
+{
+    "name": "steefmin/immutable",
+    "description": "PHP library to easily implement immutable objects",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SteefMin\\Immutable\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SteefMin\\Tests\\Immutable\\": "tests/" }
+    },
+    "authors": [
+        {
+            "name": "Steef Min",
+            "email": "steefmin@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "php": "~7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    }
+}

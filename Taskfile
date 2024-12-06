@@ -1,0 +1,91 @@
+#!/bin/bash
+# =========================================================
+# Taskfile gives you a set of quick tasks for your project
+# More info: https://github.com/Enrise/Taskfile
+# =========================================================
+
+function banner {
+	echo -e "${BLUE}\n"\
+	"▗▄▄▄▖▗▖  ▗▖▗▖  ▗▖▗▖ ▗▖▗▄▄▄▖ ▗▄▖ ▗▄▄▖ ▗▖   ▗▄▄▄▖\n"\
+	"  █  ▐▛▚▞▜▌▐▛▚▞▜▌▐▌ ▐▌  █  ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌   \n"\
+	"  █  ▐▌  ▐▌▐▌  ▐▌▐▌ ▐▌  █  ▐▛▀▜▌▐▛▀▚▖▐▌   ▐▛▀▀▘\n"\
+	"▗▄█▄▖▐▌  ▐▌▐▌  ▐▌▝▚▄▞▘  █  ▐▌ ▐▌▐▙▄▞▘▐▙▄▄▖▐▙▄▄▖${RESET}"
+}
+
+# =========================================================
+## Project
+# =========================================================
+
+function task:init { ## Initialise the project for local development
+	project:git-config
+	project:update
+	task:help
+}
+
+function task:update { ## Update all dependencies and files
+	project:update
+}
+
+function project:update {
+	title "Run project updates"
+	composer install
+}
+
+function project:git-config {
+	title "Setting git configuration"
+	git config --local core.hooksPath dev/git-hooks
+	echo -e "Git hooks directory is set to ${YELLOW}./dev/git-hooks${RESET}."
+}
+
+# =========================================================
+## Tests
+# =========================================================
+
+function task:test { ## This is a custom task definition
+	title "Running unit tests"
+	./vendor/bin/phpunit tests
+}
+
+# =========================================================
+## Taskfile
+# =========================================================
+
+set -eo pipefail
+
+BLUE=$(printf '\033[36m')
+YELLOW=$(printf '\033[33m')
+RED=$(printf '\033[31m')
+GREEN=$(printf '\033[32m')
+RESET=$(printf '\033[0m')
+
+# Define global variables here
+
+function title {
+	echo -e "\n${BLUE}=>${RESET} $1\n"
+}
+
+function task:help { ## Show all available tasks
+	title "Available tasks"
+	awk 'BEGIN {FS = " { [#][#][ ]?"} /^([a-zA-Z_-]*:?.*)(\{ )?[#][#][ ]?/ \
+		{printf "\033[33m%-34s\033[0m %s\n", $1, $2}' $0 |\
+		sed -E "s/[#]{2,}[ ]*/${RESET}/g" |\
+		sed -E "s/function task:*/  /g"
+	echo -e "\n${BLUE}Usage:${RESET} $0 ${YELLOW}<task>${RESET} <args>"
+}
+
+function task:shorthand { ## Create CLI shorthand task instead of ./Taskfile
+	title "Creating task shorthand"
+	echo -e "You're about to create ${YELLOW}/usr/local/bin/task${RESET} that requires ${RED}root${RESET} permission..."
+	sudo curl --location --silent --output /usr/local/bin/task https://enri.se/taskfile-bin
+	sudo chmod +x /usr/local/bin/task
+	echo -e "${BLUE}You can now use:${RESET} task ${YELLOW}<task>${RESET} <args>"
+}
+
+banner
+if [[ ! "$(declare -F task:${@-help})" ]]; then
+	title "Task not found"
+	echo -e "Task ${YELLOW}$1${RESET} doesn't exist."
+	task:help
+	exit 1
+fi
+task:${@-help}
