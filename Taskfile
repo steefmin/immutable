@@ -27,7 +27,7 @@ function task:update { ## Update all dependencies and files
 }
 
 function project:update {
-	title "Run project updates"
+	title "Install dependencies"
 	composer install
 }
 
