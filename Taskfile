@@ -61,11 +61,11 @@ function task:test {
 }
 
 function task:lint {
-  ./vendor/bin/ecs
+  ./vendor/bin/ecs --config=dev/ecs/ecs.php
 }
 
 function task:fix {
-  ./vendor/bin/ecs --fix
+  ./vendor/bin/ecs --config=dev/ecs/ecs.php --fix
 }
 
 function task:unit { ## Run unit test suite
