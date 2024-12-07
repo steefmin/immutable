@@ -10,7 +10,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SteefMin\\Tests\\Immutable\\": "tests/" }
+            "SteefMin\\Tests\\Immutable\\": "tests/"
+        }
     },
     "authors": [
         {
