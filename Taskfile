@@ -27,7 +27,8 @@ function task:update { ## Update all dependencies and files
 }
 
 function project:update {
-	title "Install dependencies"
+	title "Run project updates"
+	task:templating
 	composer install
 }
 
@@ -37,6 +38,18 @@ function project:git-config {
 	echo -e "Git hooks directory is set to ${YELLOW}./dev/git-hooks${RESET}."
 }
 
+function task:templating {
+  templating:composer.json
+  templating:.tool-versions
+}
+
+function templating:composer.json {
+  php ./dev/templating/composer/builder.php
+}
+
+function templating:.tool-versions {
+  php ./dev/templating/tool-versions/builder.php
+}
 # =========================================================
 ## Tests
 # =========================================================
