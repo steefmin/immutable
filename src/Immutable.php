@@ -2,23 +2,48 @@
 
 namespace SteefMin\Immutable;
 
+use ReflectionClass;
+use ReflectionProperty;
+use SteefMin\Immutable\Handler\Resolver;
+use SteefMin\Immutable\ValueObject\Argument\Arguments;
+use SteefMin\Immutable\ValueObject\Method\MethodName;
+use SteefMin\Immutable\ValueObject\Property\Properties;
+
+/**
+ * @template TClass
+ */
 trait Immutable
 {
     /**
      * Implements all with<PropertyName> methods on the class that uses this trait
-     * @return static
+     * @param array<int, mixed> $args
+     * @return TClass
      */
-    public function __call(string $name, $args)
+    public function __call(string $name, $args): self
     {
-        $name = str_replace('with', '', $name);
-        $name = lcfirst($name);
+        $resolver = Resolver::create();
+        $methodName = MethodName::create($name);
+        $methodArguments = Arguments::create($args);
 
-        $props = get_object_vars($this);
-        $propNames = array_keys($props);
-        assert(count(array_filter($propNames, fn (string $propName) => $propName === $name)) === 1, 'No property named `' . $name . '`');
+        $handler = $resolver->resolve($methodName);
 
-        assert(count($args) === 1, 'Can only update one argument at a time');
-        $props[$name] = array_shift($args);
-        return new self(...array_values($props));
+        if ($handler->createsNewInstance()) {
+            $props = (new ReflectionClass($this))->getProperties();
+            /** @var string[] $propertyKeys */
+            $propertyKeys = array_map(fn(ReflectionProperty $property) => $property->getName(), $props);
+            /** @var array<mixed> $propertyValues */
+            $propertyValues = array_values(get_object_vars($this));
+
+            $properties = array_combine($propertyKeys, $propertyValues);
+            assert(is_array($properties));
+            $properties = Properties::create($properties);
+
+            $instanceArguments = $handler->getNewInstanceArguments($properties, $methodName, $methodArguments);
+
+            /** @phpstan-ignore argument.type */
+            return new self(...$instanceArguments->toList());
+        }
+
+        throw new \BadMethodCallException();
     }
 }
