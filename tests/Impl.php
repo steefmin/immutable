@@ -6,8 +6,13 @@ namespace SteefMin\Tests\Immutable;
 
 use SteefMin\Immutable\Immutable;
 
+/**
+ * @method self withProp1(string $prop1)
+ * @method self withProp2(int $prop2)
+ */
 final class Impl
 {
+    /** @use Immutable<self> */
     use Immutable;
 
     private string $prop1;

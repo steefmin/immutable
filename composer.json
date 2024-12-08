@@ -25,6 +25,9 @@
         "php": "~8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "symplify/easy-coding-standard": "^12.4"
     }
 }

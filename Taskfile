@@ -54,9 +54,25 @@ function templating:.tool-versions {
 ## Tests
 # =========================================================
 
-function task:test { ## Run unit test suite
-	title "Running unit tests"
+function task:test {
+  task:lint
+  task:unit
+  task:stan
+}
+
+function task:lint {
+  ./vendor/bin/ecs --config=dev/ecs/ecs.php
+}
+
+function task:fix {
+  ./vendor/bin/ecs --config=dev/ecs/ecs.php --fix
+}
+
+function task:unit { ## Run unit test suite
 	./vendor/bin/phpunit tests
+}
+function task:stan { ## Run unit test suite
+	./vendor/bin/phpstan analyse --configuration dev/phpstan/phpstan.neon
 }
 
 # =========================================================
