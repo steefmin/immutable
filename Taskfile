@@ -53,7 +53,7 @@ function templating:.tool-versions {
 
 function task:merge-up {
   PREVIOUS_VERSION=$(git rev-parse --abbrev-ref HEAD)
-  git checkout $2
+  git checkout $1
   git merge --no-ff "$PREVIOUS_VERSION"
 }
 
