@@ -50,6 +50,13 @@ function templating:composer.json {
 function templating:.tool-versions {
   php ./dev/templating/tool-versions/builder.php
 }
+
+function task:merge-up {
+  PREVIOUS_VERSION=$(git rev-parse --abbrev-ref HEAD)
+  git checkout $2
+  git merge --no-ff "$PREVIOUS_VERSION"
+}
+
 # =========================================================
 ## Tests
 # =========================================================
