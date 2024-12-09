@@ -28,9 +28,9 @@ final class WithProperty implements HandlerInterface
         return true;
     }
 
-    public function getNewInstanceArguments(Properties $properties, Name $name, Arguments $arguments): Arguments
+    public function getNewInstanceArguments(Properties $properties, Name $methodName, Arguments $arguments): Arguments
     {
-        $propertyName = PropertyName::createFromStringable($name->withoutPrefix('with'));
+        $propertyName = PropertyName::createFromStringable($methodName->withoutPrefix('with'));
 
         $property = $properties->getPropertyByName($propertyName);
 

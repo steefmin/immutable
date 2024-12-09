@@ -25,6 +25,7 @@ final class Resolver
             With::create(),
             WithProperty::create(),
             Append::create(),
+            AppendProperty::create(),
         );
     }
 

@@ -11,7 +11,7 @@ use SteefMin\Immutable\ValueObject\Property\Properties;
 use SteefMin\Immutable\ValueObject\Property\Property;
 use SteefMin\Immutable\ValueObject\Property\PropertyName;
 
-final class Append implements HandlerInterface
+final class AppendProperty implements HandlerInterface
 {
     private function __construct()
     {
@@ -27,16 +27,9 @@ final class Append implements HandlerInterface
         return true;
     }
 
-    public function getNewInstanceArguments(
-        Properties $properties,
-        MethodName $methodName,
-        Arguments $arguments
-    ): Arguments {
-        $value = $arguments->first()->value();
-
-        assert(is_string($value), 'First argument must be a string');
-
-        $propertyName = PropertyName::create($value);
+    public function getNewInstanceArguments(Properties $properties, MethodName $methodName, Arguments $arguments): Arguments
+    {
+        $propertyName = PropertyName::createFromStringable($methodName->withoutPrefix('append'));
 
         $property = $properties->getPropertyByName($propertyName);
 
@@ -46,16 +39,15 @@ final class Append implements HandlerInterface
 
         assert(is_array($replacingValue), 'Replacing value must be an array');
 
-        $replacingValue[] = $arguments->second()->value();
+        $replacingValue[] = $arguments->first()->value();
 
         $replacingArgument = Argument::create($propertyName->toString(), $replacingValue);
 
         return Arguments::createFromArrayable($properties)->replaceArgument($replacingArgument);
-
     }
 
     public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
     {
-        return $methodName->toString() === 'append' && $arguments->countEquals(2);
+        return $methodName->startsWith('append') && $arguments->countEquals(1);
     }
 }

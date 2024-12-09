@@ -10,6 +10,7 @@ use SteefMin\Immutable\ValueObject\Argument\Arguments;
 /**
  * @immutable
  * @method static with(string $propertyName, mixed $value)
+ * @method static append(string $propertyName, mixed $value)
  */
 trait Immutable
 {

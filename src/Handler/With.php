@@ -27,7 +27,7 @@ final class With implements HandlerInterface
         return true;
     }
 
-    public function getNewInstanceArguments(Properties $properties, MethodName $name, Arguments $arguments): Arguments
+    public function getNewInstanceArguments(Properties $properties, MethodName $methodName, Arguments $arguments): Arguments
     {
         $nameArgument = $arguments->first();
         $value = $nameArgument->value();

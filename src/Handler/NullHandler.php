@@ -29,7 +29,7 @@ final class NullHandler implements HandlerInterface
         return true;
     }
 
-    public function getNewInstanceArguments(Properties $properties, MethodName $name, Arguments $arguments): Arguments
+    public function getNewInstanceArguments(Properties $properties, MethodName $methodName, Arguments $arguments): Arguments
     {
         return Arguments::createEmpty();
     }

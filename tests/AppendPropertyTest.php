@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace SteefMin\Tests\Immutable;
 
+use AssertionError;
 use PHPUnit\Framework\TestCase;
 
-final class AppendTest extends TestCase
+final class AppendPropertyTest extends TestCase
 {
     public function testAppend(): void
     {
         $subject = new Impl('a', 1, [1]);
 
-        $actual = $subject->append('prop3', 2);
+        $actual = $subject->appendProp3(2);
 
         self::assertInstanceOf(Impl::class, $actual);
 
@@ -23,7 +24,7 @@ final class AppendTest extends TestCase
     {
         $subject = new Impl('a', 1, [1]);
 
-        $actual = $subject->append('prop3', '2');
+        $actual = $subject->appendProp3('2'); // @phpstan-ignore argument.type
 
         self::assertInstanceOf(Impl::class, $actual);
 
@@ -39,8 +40,8 @@ final class AppendTest extends TestCase
         self::assertNotSame($subject, $clone);
         self::assertEquals($subject, $clone);
 
-        $this->expectException(\AssertionError::class);
-        $subject->append('propA', 'b');
+        $this->expectException(AssertionError::class);
+        $subject->appendPropA('b'); // @phpstan-ignore method.notFound
     }
 
     public function testWInvalidArgumentCount(): void
@@ -53,6 +54,6 @@ final class AppendTest extends TestCase
         self::assertEquals($subject, $clone);
 
         $this->expectException(\BadMethodCallException::class);
-        $subject->append('prop3', 2, 3); // @phpstan-ignore arguments.count
+        $subject->appendProp3(2, 3); // @phpstan-ignore arguments.count
     }
 }
