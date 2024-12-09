@@ -11,18 +11,16 @@ use SteefMin\Immutable\ValueObject\Arrayable;
  */
 final class Arguments implements \IteratorAggregate, \Countable
 {
-    /** @var Argument[] */
-    private array $arguments;
-
-    private function __construct()
-    {
-        $this->arguments = [];
+    /** @param  Argument[] $arguments */
+    private function __construct(
+        private readonly array $arguments
+    ) {
     }
 
     /** @param array<string|int, mixed> $args */
     public static function create(array $args): self
     {
-        $self = new self();
+        $self = self::createEmpty();
         foreach ($args as $name => $arg) {
             $self = $self->appendArgument(Argument::create((string) $name, $arg));
         }
@@ -37,7 +35,7 @@ final class Arguments implements \IteratorAggregate, \Countable
 
     public static function createEmpty(): self
     {
-        return new self();
+        return new self([]);
     }
 
     /** @return \ArrayIterator<int, Argument> */
@@ -63,9 +61,8 @@ final class Arguments implements \IteratorAggregate, \Countable
 
     public function replaceArgument(Argument $replacingArgument): self
     {
-        $result = new self();
+        $result = self::createEmpty();
 
-        /** @var Argument $existingArg */
         foreach ($this->arguments as $existingArg) {
             if ($existingArg->name()->equals($replacingArgument->name())) {
                 $result = $result->appendArgument($replacingArgument);
@@ -82,7 +79,6 @@ final class Arguments implements \IteratorAggregate, \Countable
     {
         $result = [];
 
-        /** @var Argument $argument */
         foreach ($this->arguments as $argument) {
             $result[$argument->name()->toString()] = $argument->value();
         }
@@ -97,8 +93,8 @@ final class Arguments implements \IteratorAggregate, \Countable
 
     private function appendArgument(Argument $argument): self
     {
-        $self = clone $this;
-        $self->arguments[] = $argument;
-        return $self;
+        $arguments = $this->arguments;
+        $arguments[] = $argument;
+        return new self($arguments);
     }
 }

@@ -8,11 +8,9 @@ use SteefMin\Immutable\ValueObject\Name;
 
 final class MethodName implements Name
 {
-    private string $name;
-
-    private function __construct(string $name)
-    {
-        $this->name = $name;
+    private function __construct(
+        private readonly string $name,
+    ) {
     }
 
     public static function create(string $name): self

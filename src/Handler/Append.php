@@ -54,7 +54,7 @@ final class Append implements HandlerInterface
             return false;
         }
 
-        if (!$arguments->countEquals(1)) {
+        if (! $arguments->countEquals(1)) {
             return false;
         }
 

@@ -9,11 +9,9 @@ use SteefMin\Immutable\ValueObject\Stringable;
 
 final class PropertyName implements Name
 {
-    private string $value;
-
-    private function __construct(string $value)
-    {
-        $this->value = $value;
+    private function __construct(
+        private readonly string $value,
+    ) {
     }
 
     public static function create(string $value): self

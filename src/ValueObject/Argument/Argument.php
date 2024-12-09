@@ -6,14 +6,10 @@ namespace SteefMin\Immutable\ValueObject\Argument;
 
 final class Argument
 {
-    private readonly ArgumentName $name;
-
-    private readonly mixed $value;
-
-    private function __construct(ArgumentName $name, mixed $value)
-    {
-        $this->name = $name;
-        $this->value = $value;
+    private function __construct(
+        private readonly ArgumentName $name,
+        private readonly mixed $value,
+    ) {
     }
 
     public static function create(string $name, mixed $value): self

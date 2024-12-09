@@ -6,16 +6,10 @@ namespace SteefMin\Immutable\ValueObject\Property;
 
 final class Property
 {
-    private PropertyName $propertyName;
-
-    private mixed $value;
-
     private function __construct(
-        PropertyName $propertyName,
-        mixed $value
+        private readonly PropertyName $propertyName,
+        private readonly mixed $value,
     ) {
-        $this->propertyName = $propertyName;
-        $this->value = $value;
     }
 
     public static function create(string $propertyName, mixed $value): self

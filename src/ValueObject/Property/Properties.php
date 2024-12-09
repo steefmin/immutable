@@ -15,18 +15,16 @@ use SteefMin\Immutable\ValueObject\Arrayable;
  */
 final class Properties implements IteratorAggregate, Countable, Arrayable
 {
-    /** @var Property[] */
-    private array $properties;
-
-    public function __construct()
-    {
-        $this->properties = [];
+    /** @param Property[] $properties */
+    public function __construct(
+        private readonly array $properties,
+    ) {
     }
 
     /** @param array<string, mixed> $properties */
     public static function create(array $properties): self
     {
-        $self = new self();
+        $self = new self([]);
         foreach ($properties as $propertyName => $value) {
             $self = $self->appendProperty(Property::create($propertyName, $value));
         }
@@ -36,9 +34,9 @@ final class Properties implements IteratorAggregate, Countable, Arrayable
 
     public function appendProperty(Property $property): self
     {
-        $self = clone $this;
-        $self->properties[] = $property;
-        return $self;
+        $properties = $this->properties;
+        $properties[] = $property;
+        return new self($properties);
     }
 
     /** @return ArrayIterator<int, Property> */
@@ -67,7 +65,6 @@ final class Properties implements IteratorAggregate, Countable, Arrayable
     {
         $result = [];
 
-        /** @var Property $property */
         foreach ($this->properties as $property) {
             $result[$property->name()->toString()] = $property->value();
         }

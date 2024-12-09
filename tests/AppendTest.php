@@ -53,6 +53,6 @@ final class AppendTest extends TestCase
         self::assertEquals($subject, $clone);
 
         $this->expectException(\BadMethodCallException::class);
-        $subject->appendProp3('b', 'c'); // @phpstan-ignore method.notFound
+        $subject->appendProp3(2, 3); // @phpstan-ignore arguments.count
     }
 }
