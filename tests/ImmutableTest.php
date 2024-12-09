@@ -10,7 +10,7 @@ final class ImmutableTest extends TestCase
 {
     public function testCreatesNewInstance(): void
     {
-        $subject = new Impl('a', 1);
+        $subject = new Impl('a', 1, []);
 
         $clone = clone $subject;
 
@@ -29,7 +29,7 @@ final class ImmutableTest extends TestCase
 
     public function testReplaceSecondProp(): void
     {
-        $subject = new Impl('a', 1);
+        $subject = new Impl('a', 1, []);
 
         $clone = clone $subject;
 
@@ -47,7 +47,7 @@ final class ImmutableTest extends TestCase
 
     public function testWith(): void
     {
-        $subject = new Impl('a', 1);
+        $subject = new Impl('a', 1, []);
 
         $clone = clone $subject;
 
@@ -62,5 +62,70 @@ final class ImmutableTest extends TestCase
 
         self::assertSame('b', $actual->getProp1());
         self::assertSame(1, $actual->getProp2());
+    }
+
+    public function testWithInvalidPropertyName(): void
+    {
+        $subject = new Impl('a', 1, []);
+
+        $clone = clone $subject;
+
+        self::assertNotSame($subject, $clone);
+        self::assertEquals($subject, $clone);
+
+        $this->expectException(\AssertionError::class);
+        $subject->with('propA', 'b');
+    }
+
+    public function testWithInvalidPropertyNameType(): void
+    {
+        $subject = new Impl('a', 1, []);
+
+        $clone = clone $subject;
+
+        self::assertNotSame($subject, $clone);
+        self::assertEquals($subject, $clone);
+
+        $this->expectException(\AssertionError::class);
+        $subject->with(1, 'b'); // @phpstan-ignore argument.type
+    }
+
+    public function testWithInvalidArgumentCount(): void
+    {
+        $subject = new Impl('a', 1, []);
+
+        $clone = clone $subject;
+
+        self::assertNotSame($subject, $clone);
+        self::assertEquals($subject, $clone);
+
+        $this->expectException(\BadMethodCallException::class);
+        $subject->with('propA', 'b', 'c'); // @phpstan-ignore arguments.count
+    }
+
+    public function testWithPropertyInvalidPropertyName(): void
+    {
+        $subject = new Impl('a', 1, []);
+
+        $clone = clone $subject;
+
+        self::assertNotSame($subject, $clone);
+        self::assertEquals($subject, $clone);
+
+        $this->expectException(\AssertionError::class);
+        $subject->withpropA('b'); // @phpstan-ignore method.notFound
+    }
+
+    public function testWithPropertyInvalidArgumentCount(): void
+    {
+        $subject = new Impl('a', 1, []);
+
+        $clone = clone $subject;
+
+        self::assertNotSame($subject, $clone);
+        self::assertEquals($subject, $clone);
+
+        $this->expectException(\BadMethodCallException::class);
+        $subject->withpropA('b', 'c'); // @phpstan-ignore method.notFound
     }
 }

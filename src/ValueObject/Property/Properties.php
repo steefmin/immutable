@@ -46,17 +46,15 @@ final class Properties implements \IteratorAggregate, \Countable
         return count($this->properties);
     }
 
-    public function assertPropertyExists(PropertyName $propertyName): void
+    public function getPropertyByName(PropertyName $propertyName): ?Property
     {
-        $propertiesWithEqualNames = array_filter(
-            $this->properties,
-            fn(Property $prop) => $prop->name()->equals($propertyName),
-        );
+        foreach ($this->properties as $property) {
+            if ($property->name()->equals($propertyName)) {
+                return $property;
+            }
+        }
 
-        assert(
-            count($propertiesWithEqualNames) === 1,
-            'No property named `' . $propertyName->toString() . '`',
-        );
+        return null;
     }
 
     /** @return array<string, mixed> */

@@ -43,14 +43,14 @@ final class Arguments implements \IteratorAggregate, \Countable
         return count($this->arguments);
     }
 
-    public function assertCount(int $count, string $message): void
-    {
-        assert($this->count() === $count, $message);
-    }
-
     public function first(): Argument
     {
         return $this->arguments[0];
+    }
+
+    public function second(): Argument
+    {
+        return $this->arguments[1];
     }
 
     private function appendArgument(Argument $argument): self
@@ -76,22 +76,17 @@ final class Arguments implements \IteratorAggregate, \Countable
         return $result;
     }
 
-    /** @return mixed[] */
+    /** @return array<string, mixed> */
     public function toList(): array
     {
         $result = [];
 
         /** @var Argument $argument */
         foreach ($this->arguments as $argument) {
-            $result[] = $argument->value();
+            $result[$argument->name()->toString()] = $argument->value();
         }
 
         return $result;
-    }
-
-    public function second(): Argument
-    {
-        return $this->arguments[1];
     }
 
     public function countEquals(int $int): bool

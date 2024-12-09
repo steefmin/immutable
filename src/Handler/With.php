@@ -8,6 +8,7 @@ use SteefMin\Immutable\ValueObject\Argument\ArgumentName;
 use SteefMin\Immutable\ValueObject\Argument\Arguments;
 use SteefMin\Immutable\ValueObject\Method\MethodName;
 use SteefMin\Immutable\ValueObject\Property\Properties;
+use SteefMin\Immutable\ValueObject\Property\Property;
 use SteefMin\Immutable\ValueObject\Property\PropertyName;
 
 final class With implements HandlerInterface
@@ -28,13 +29,16 @@ final class With implements HandlerInterface
 
     public function getNewInstanceArguments(Properties $properties, MethodName $name, Arguments $arguments): Arguments
     {
-        $arguments->assertCount(2, 'Can only update one argument at a time');
-
         $nameArgument = $arguments->first();
         $value = $nameArgument->value();
-        assert(is_string($value));
 
-        $properties->assertPropertyExists(PropertyName::create($value));
+        assert(is_string($value), 'First argument must be a string');
+
+        $propertyName = PropertyName::create($value);
+
+        $property = $properties->getPropertyByName($propertyName);
+
+        assert($property instanceof Property, sprintf('Property "%s" does not exist', $propertyName->toString()));
 
         $replacingArgument = $arguments
             ->second()

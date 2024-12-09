@@ -13,18 +13,23 @@ use SteefMin\Immutable\Immutable;
  */
 final class Impl
 {
-    /** @use Immutable<array{prop1: string, prop2: int}> */
+    /** @use Immutable<array{prop1: string, prop2: int, prop3: int[]}> */
     use Immutable;
 
     private string $prop1;
+    /** @var int[] */
+    private array $prop3;
     private int $prop2;
 
+    /** @param int[] $prop3 */
     public function __construct(
         string $prop1,
-        int $prop2
+        int $prop2,
+        array $prop3,
     ) {
         $this->prop1 = $prop1;
         $this->prop2 = $prop2;
+        $this->prop3 = $prop3;
     }
 
     public function getProp1(): string
@@ -35,5 +40,11 @@ final class Impl
     public function getProp2(): int
     {
         return $this->prop2;
+    }
+
+    /** @return int[] */
+    public function getProp3(): array
+    {
+        return $this->prop3;
     }
 }
