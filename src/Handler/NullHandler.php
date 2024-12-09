@@ -25,7 +25,7 @@ final class NullHandler implements HandlerInterface
     }
 
 
-    public function canProvideFor(MethodName $methodName): bool
+    public function canProvideFor(MethodName $methodName, Arguments $arguments): bool
     {
         return true;
     }

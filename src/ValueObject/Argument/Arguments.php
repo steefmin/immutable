@@ -88,4 +88,14 @@ final class Arguments implements \IteratorAggregate, \Countable
 
         return $result;
     }
+
+    public function second(): Argument
+    {
+        return $this->arguments[1];
+    }
+
+    public function countEquals(int $int): bool
+    {
+        return $this->count() === $int;
+    }
 }

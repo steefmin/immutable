@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SteefMin\Immutable\ValueObject\Argument;
 
+
 final class Argument
 {
-    private ArgumentName $name;
-
-    private mixed $value;
+    private readonly ArgumentName $name;
+    private readonly mixed $value;
 
     public static function create(string $name, mixed $value): self
     {
@@ -31,10 +31,8 @@ final class Argument
         return $this->value;
     }
 
-    public function withArgumentName(ArgumentName $name): self
+    public function withName(ArgumentName $name): self
     {
-        $self = clone $this;
-        $self->name = $name;
-        return $self;
+        return new self($name, $this->value);
     }
 }

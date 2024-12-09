@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SteefMin\Immutable\ValueObject\Property;
 
-final class PropertyName
+use SteefMin\Immutable\ValueObject\Name;
+
+final class PropertyName implements Name
 {
     private string $value;
 
@@ -26,5 +28,15 @@ final class PropertyName
     public function toString(): string
     {
         return $this->value;
+    }
+
+    public function withoutPrefix(string $prefix): static
+    {
+        return new self(lcfirst(str_replace($prefix, '', $this->value)));
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this->value === '';
     }
 }

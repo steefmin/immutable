@@ -7,10 +7,11 @@ namespace SteefMin\Immutable\Handler;
 use SteefMin\Immutable\ValueObject\Argument\ArgumentName;
 use SteefMin\Immutable\ValueObject\Argument\Arguments;
 use SteefMin\Immutable\ValueObject\Method\MethodName;
+use SteefMin\Immutable\ValueObject\Name;
 use SteefMin\Immutable\ValueObject\Property\Properties;
 use SteefMin\Immutable\ValueObject\Property\PropertyName;
 
-final class With implements HandlerInterface
+final class WithProperty implements HandlerInterface
 {
     public static function create(): self
     {
@@ -26,25 +27,21 @@ final class With implements HandlerInterface
         return true;
     }
 
-    public function getNewInstanceArguments(Properties $properties, MethodName $name, Arguments $arguments): Arguments
+    public function getNewInstanceArguments(Properties $properties, Name $name, Arguments $arguments): Arguments
     {
-        $arguments->assertCount(2, 'Can only update one argument at a time');
+        $replacingPropertyName = $name->withoutPrefix('with');
 
-        $nameArgument = $arguments->first();
-        $value = $nameArgument->value();
-        assert(is_string($value));
-
-        $properties->assertPropertyExists(PropertyName::create($value));
+        $properties->assertPropertyExists(PropertyName::create($replacingPropertyName->toString()));
 
         $replacingArgument = $arguments
-            ->second()
-            ->withName(ArgumentName::create($value));
+            ->first()
+            ->withName(ArgumentName::create($replacingPropertyName->toString()));
 
         return Arguments::create($properties->toArray())->replaceArgument($replacingArgument);
     }
 
     public function canProvideFor(MethodName $methodName, Arguments $arguments): bool
     {
-        return $methodName->toString() === 'with' && $arguments->countEquals(2);
+        return $methodName->startsWith('with') && $arguments->countEquals(1);
     }
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SteefMin\Immutable\ValueObject\Method;
 
-final class MethodName
+use SteefMin\Immutable\ValueObject\Name;
+
+final class MethodName implements Name
 {
     private string $name;
 
@@ -18,9 +20,9 @@ final class MethodName
         $this->name = $name;
     }
 
-    public function withoutPrefix(string $string): self
+    public function withoutPrefix(string $prefix): static
     {
-        return new self(lcfirst(str_replace($string, '', $this->name)));
+        return new self(lcfirst(str_replace($prefix, '', $this->name)));
     }
 
     public function toString(): string
@@ -30,6 +32,16 @@ final class MethodName
 
     public function startsWith(string $prefix): bool
     {
-        return strpos($this->name, $prefix) === 0;
+        return str_starts_with($this->name, $prefix) && $this->withoutPrefix($prefix)->isNotEmpty();
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this->name === '';
+    }
+
+    private function isNotEmpty(): bool
+    {
+        return !$this->isEmpty();
     }
 }

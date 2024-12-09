@@ -44,4 +44,23 @@ final class ImmutableTest extends TestCase
         self::assertSame('a', $actual->getProp1());
         self::assertSame(3, $actual->getProp2());
     }
+
+    public function testWith(): void
+    {
+        $subject = new Impl('a', 1);
+
+        $clone = clone $subject;
+
+        self::assertNotSame($subject, $clone);
+        self::assertEquals($subject, $clone);
+
+
+        $actual = $subject->with('prop1', 'b');
+
+        self::assertSame('a', $subject->getProp1());
+        self::assertSame(1, $subject->getProp2());
+
+        self::assertSame('b', $actual->getProp1());
+        self::assertSame(1, $actual->getProp2());
+    }
 }

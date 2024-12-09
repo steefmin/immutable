@@ -7,12 +7,13 @@ namespace SteefMin\Tests\Immutable;
 use SteefMin\Immutable\Immutable;
 
 /**
+ * @method self with(string $propertyName, mixed $value)
  * @method self withProp1(string $prop1)
  * @method self withProp2(int $prop2)
  */
 final class Impl
 {
-    /** @use Immutable<self, array{prop1: string, prop2: int}> */
+    /** @use Immutable<array{prop1: string, prop2: int}> */
     use Immutable;
 
     private string $prop1;
