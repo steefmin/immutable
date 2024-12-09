@@ -23,6 +23,11 @@ final class WithProperty implements HandlerInterface
         return new self();
     }
 
+    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
+    {
+        return $methodName->startsWith('with') && $arguments->countEquals(1);
+    }
+
     public function createsNewInstance(): bool
     {
         return true;
@@ -41,10 +46,5 @@ final class WithProperty implements HandlerInterface
             ->withName(ArgumentName::createFromStringable($propertyName));
 
         return Arguments::createFromArrayable($properties)->replaceArgument($replacingArgument);
-    }
-
-    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
-    {
-        return $methodName->startsWith('with') && $arguments->countEquals(1);
     }
 }

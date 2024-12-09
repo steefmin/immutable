@@ -22,6 +22,11 @@ final class With implements HandlerInterface
         return new self();
     }
 
+    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
+    {
+        return $methodName->toString() === 'with' && $arguments->countEquals(2);
+    }
+
     public function createsNewInstance(): bool
     {
         return true;
@@ -45,10 +50,5 @@ final class With implements HandlerInterface
             ->withName(ArgumentName::create($value));
 
         return Arguments::createFromArrayable($properties)->replaceArgument($replacingArgument);
-    }
-
-    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
-    {
-        return $methodName->toString() === 'with' && $arguments->countEquals(2);
     }
 }

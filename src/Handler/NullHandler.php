@@ -19,14 +19,14 @@ final class NullHandler implements HandlerInterface
         return new self();
     }
 
-    public function createsNewInstance(): bool
-    {
-        return false;
-    }
-
     public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
     {
         return true;
+    }
+
+    public function createsNewInstance(): bool
+    {
+        return false;
     }
 
     public function getNewInstanceArguments(Properties $properties, MethodName $methodName, Arguments $arguments): Arguments

@@ -10,9 +10,9 @@ use SteefMin\Immutable\ValueObject\Property\Properties;
 
 interface HandlerInterface
 {
+    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool;
+
     public function createsNewInstance(): bool;
 
     public function getNewInstanceArguments(Properties $properties, MethodName $methodName, Arguments $arguments): Arguments;
-
-    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool;
 }
