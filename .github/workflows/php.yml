@@ -17,6 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Log php version
+      run: php -v
+
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
