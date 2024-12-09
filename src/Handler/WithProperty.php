@@ -30,7 +30,7 @@ final class WithProperty implements HandlerInterface
 
     public function getNewInstanceArguments(Properties $properties, Name $name, Arguments $arguments): Arguments
     {
-        $propertyName = PropertyName::create($name->withoutPrefix('with')->toString());
+        $propertyName = PropertyName::createFromStringable($name->withoutPrefix('with'));
 
         $property = $properties->getPropertyByName($propertyName);
 
@@ -38,12 +38,12 @@ final class WithProperty implements HandlerInterface
 
         $replacingArgument = $arguments
             ->first()
-            ->withName(ArgumentName::create($propertyName->toString()));
+            ->withName(ArgumentName::createFromStringable($propertyName));
 
-        return Arguments::create($properties->toArray())->replaceArgument($replacingArgument);
+        return Arguments::createFromArrayable($properties)->replaceArgument($replacingArgument);
     }
 
-    public function canProvideFor(MethodName $methodName, Arguments $arguments): bool
+    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
     {
         return $methodName->startsWith('with') && $arguments->countEquals(1);
     }

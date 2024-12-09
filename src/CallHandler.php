@@ -42,7 +42,7 @@ final class CallHandler
      */
     public function __invoke(callable $instanceCreator, callable $failureCallback): mixed
     {
-        $handler = $this->resolver->resolve($this->methodName, $this->arguments);
+        $handler = $this->resolver->resolve($this->properties, $this->methodName, $this->arguments);
 
         if ($handler->createsNewInstance()) {
             $newInstanceArguments = $handler->getNewInstanceArguments(

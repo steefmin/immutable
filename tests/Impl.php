@@ -9,6 +9,7 @@ use SteefMin\Immutable\Immutable;
 /**
  * @method self withProp1(string $prop1)
  * @method self withProp2(int $prop2)
+ * @method self appendProp3(int $prop2)
  */
 final class Impl
 {

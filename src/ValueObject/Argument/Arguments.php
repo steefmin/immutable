@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SteefMin\Immutable\ValueObject\Argument;
 
+use SteefMin\Immutable\ValueObject\Arrayable;
+
 /**
  * @implements \IteratorAggregate<int, Argument>
  */
@@ -25,6 +27,12 @@ final class Arguments implements \IteratorAggregate, \Countable
             $self = $self->appendArgument(Argument::create((string) $name, $arg));
         }
         return $self;
+    }
+
+    /** @param Arrayable<string|int, mixed> $arrayable */
+    public static function createFromArrayable(Arrayable $arrayable): self
+    {
+        return self::create($arrayable->toArray());
     }
 
     public static function createEmpty(): self

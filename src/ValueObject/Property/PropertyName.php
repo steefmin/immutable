@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SteefMin\Immutable\ValueObject\Property;
 
 use SteefMin\Immutable\ValueObject\Name;
+use SteefMin\Immutable\ValueObject\Stringable;
 
 final class PropertyName implements Name
 {
@@ -18,6 +19,11 @@ final class PropertyName implements Name
     public static function create(string $value): self
     {
         return new self($value);
+    }
+
+    public static function createFromStringable(Stringable $stringable): self
+    {
+        return self::create($stringable->toString());
     }
 
     public function equals(self $other): bool

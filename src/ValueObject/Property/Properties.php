@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace SteefMin\Immutable\ValueObject\Property;
 
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+use SteefMin\Immutable\ValueObject\Arrayable;
+
 /**
- * @implements \IteratorAggregate<Property>
+ * @implements IteratorAggregate<Property>
+ * @implements Arrayable<string, mixed>
  */
-final class Properties implements \IteratorAggregate, \Countable
+final class Properties implements IteratorAggregate, Countable, Arrayable
 {
     /** @var Property[] */
     private array $properties;
@@ -35,10 +41,10 @@ final class Properties implements \IteratorAggregate, \Countable
         return $self;
     }
 
-    /** @return \ArrayIterator<int, Property> */
-    public function getIterator(): \ArrayIterator
+    /** @return ArrayIterator<int, Property> */
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->properties);
+        return new ArrayIterator($this->properties);
     }
 
     public function count(): int
@@ -57,7 +63,6 @@ final class Properties implements \IteratorAggregate, \Countable
         return null;
     }
 
-    /** @return array<string, mixed> */
     public function toArray(): array
     {
         $result = [];

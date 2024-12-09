@@ -14,5 +14,5 @@ interface HandlerInterface
 
     public function getNewInstanceArguments(Properties $properties, MethodName $name, Arguments $arguments): Arguments;
 
-    public function canProvideFor(MethodName $methodName, Arguments $arguments): bool;
+    public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool;
 }
