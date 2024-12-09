@@ -51,11 +51,13 @@ final class Arguments implements \IteratorAggregate, \Countable
 
     public function first(): Argument
     {
+        assert(array_key_exists(0, $this->arguments));
         return $this->arguments[0];
     }
 
     public function second(): Argument
     {
+        assert(array_key_exists(1, $this->arguments));
         return $this->arguments[1];
     }
 
