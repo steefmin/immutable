@@ -11,9 +11,9 @@ use SteefMin\Immutable\ValueObject\Arrayable;
  */
 final class Arguments implements \IteratorAggregate, \Countable
 {
-    /** @param  Argument[] $arguments */
+    /** @param Argument[] $arguments */
     private function __construct(
-        private readonly array $arguments
+        private readonly array $arguments,
     ) {
     }
 

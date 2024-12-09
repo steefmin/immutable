@@ -7,7 +7,6 @@ namespace SteefMin\Immutable\Handler;
 use SteefMin\Immutable\ValueObject\Argument\ArgumentName;
 use SteefMin\Immutable\ValueObject\Argument\Arguments;
 use SteefMin\Immutable\ValueObject\Method\MethodName;
-use SteefMin\Immutable\ValueObject\Name;
 use SteefMin\Immutable\ValueObject\Property\Properties;
 use SteefMin\Immutable\ValueObject\Property\Property;
 use SteefMin\Immutable\ValueObject\Property\PropertyName;
@@ -33,7 +32,7 @@ final class WithProperty implements HandlerInterface
         return true;
     }
 
-    public function getNewInstanceArguments(Properties $properties, Name $methodName, Arguments $arguments): Arguments
+    public function getNewInstanceArguments(Properties $properties, MethodName $methodName, Arguments $arguments): Arguments
     {
         $propertyName = PropertyName::createFromStringable($methodName->withoutPrefix('with'));
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SteefMin\Immutable\ValueObject\Method;
 
-use SteefMin\Immutable\ValueObject\Name;
+use SteefMin\Immutable\ValueObject\Stringable;
 
-final class MethodName implements Name
+final class MethodName implements Stringable
 {
     private function __construct(
         private readonly string $name,
@@ -33,13 +33,13 @@ final class MethodName implements Name
         return str_starts_with($this->name, $prefix) && $this->withoutPrefix($prefix)->isNotEmpty();
     }
 
-    public function isEmpty(): bool
+    public function valueEquals(string $string): bool
     {
-        return $this->name === '';
+        return $this->name === $string;
     }
 
     private function isNotEmpty(): bool
     {
-        return ! $this->isEmpty();
+        return ! $this->valueEquals('');
     }
 }

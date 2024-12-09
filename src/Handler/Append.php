@@ -24,7 +24,7 @@ final class Append implements HandlerInterface
 
     public function canProvideFor(Properties $properties, MethodName $methodName, Arguments $arguments): bool
     {
-        return $methodName->toString() === 'append' && $arguments->countEquals(2);
+        return $methodName->valueEquals('append') && $arguments->countEquals(2);
     }
 
     public function createsNewInstance(): bool
@@ -56,6 +56,5 @@ final class Append implements HandlerInterface
         $replacingArgument = Argument::create($propertyName->toString(), $replacingValue);
 
         return Arguments::createFromArrayable($properties)->replaceArgument($replacingArgument);
-
     }
 }
