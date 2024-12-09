@@ -9,7 +9,7 @@ use SteefMin\Immutable\Immutable;
 final class ImplWithOwnCallMagicMethod
 {
     use Immutable {
-        __call as protected __callTrait;
+        __call as protected immutable;
     }
 
     private readonly string $prop1;
@@ -33,7 +33,7 @@ final class ImplWithOwnCallMagicMethod
     /** @param array<int, mixed> $args */
     public function __call(string $name, array $args): self
     {
-        return $this->__calltrait($name, $args);
+        return $this->immutable($name, $args);
     }
 
     public function getProp1(): string
