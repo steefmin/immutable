@@ -6,21 +6,21 @@ namespace SteefMin\Immutable\ValueObject\Property;
 
 final class Property
 {
-    private PropertyName  $propertyName;
+    private PropertyName $propertyName;
 
     private mixed $value;
 
-    public static function create(string $propertyName, mixed $value): self
-    {
-        return new self(PropertyName::create($propertyName), $value);
-    }
-
     private function __construct(
-        PropertyName  $propertyName,
+        PropertyName $propertyName,
         mixed $value
     ) {
         $this->propertyName = $propertyName;
         $this->value = $value;
+    }
+
+    public static function create(string $propertyName, mixed $value): self
+    {
+        return new self(PropertyName::create($propertyName), $value);
     }
 
     public function name(): PropertyName

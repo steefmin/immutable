@@ -53,13 +53,6 @@ final class Arguments implements \IteratorAggregate, \Countable
         return $this->arguments[1];
     }
 
-    private function appendArgument(Argument $argument): self
-    {
-        $self = clone $this;
-        $self->arguments[] = $argument;
-        return $self;
-    }
-
     public function replaceArgument(Argument $replacingArgument): self
     {
         $result = new self();
@@ -92,5 +85,12 @@ final class Arguments implements \IteratorAggregate, \Countable
     public function countEquals(int $int): bool
     {
         return $this->count() === $int;
+    }
+
+    private function appendArgument(Argument $argument): self
+    {
+        $self = clone $this;
+        $self->arguments[] = $argument;
+        return $self;
     }
 }

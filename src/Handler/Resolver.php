@@ -10,7 +10,13 @@ use SteefMin\Immutable\ValueObject\Method\MethodName;
 final class Resolver
 {
     /** @var HandlerInterface[] */
-    private array $handlers;
+    private readonly array $handlers;
+
+    private function __construct(
+        HandlerInterface ...$handlers
+    ) {
+        $this->handlers = $handlers;
+    }
 
     public static function create(): self
     {
@@ -18,12 +24,6 @@ final class Resolver
             With::create(),
             WithProperty::create(),
         );
-    }
-
-    private function __construct(
-        HandlerInterface ...$handlers
-    ) {
-        $this->handlers = $handlers;
     }
 
     public function resolve(MethodName $methodName, Arguments $arguments): HandlerInterface

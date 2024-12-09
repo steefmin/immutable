@@ -10,14 +10,14 @@ final class MethodName implements Name
 {
     private string $name;
 
-    public static function create(string $name): self
-    {
-        return new self($name);
-    }
-
     private function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    public static function create(string $name): self
+    {
+        return new self($name);
     }
 
     public function withoutPrefix(string $prefix): static
@@ -42,6 +42,6 @@ final class MethodName implements Name
 
     private function isNotEmpty(): bool
     {
-        return !$this->isEmpty();
+        return ! $this->isEmpty();
     }
 }

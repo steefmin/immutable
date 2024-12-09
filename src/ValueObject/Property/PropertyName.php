@@ -10,14 +10,14 @@ final class PropertyName implements Name
 {
     private string $value;
 
-    public static function create(string $value): self
-    {
-        return new self($value);
-    }
-
     private function __construct(string $value)
     {
         $this->value = $value;
+    }
+
+    public static function create(string $value): self
+    {
+        return new self($value);
     }
 
     public function equals(self $other): bool

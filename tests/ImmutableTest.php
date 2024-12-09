@@ -17,7 +17,6 @@ final class ImmutableTest extends TestCase
         self::assertNotSame($subject, $clone);
         self::assertEquals($subject, $clone);
 
-
         $actual = $subject->withProp1('b');
 
         self::assertSame('a', $subject->getProp1());
@@ -53,7 +52,6 @@ final class ImmutableTest extends TestCase
 
         self::assertNotSame($subject, $clone);
         self::assertEquals($subject, $clone);
-
 
         $actual = $subject->with('prop1', 'b');
 

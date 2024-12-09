@@ -12,6 +12,11 @@ final class Properties implements \IteratorAggregate, \Countable
     /** @var Property[] */
     private array $properties;
 
+    public function __construct()
+    {
+        $this->properties = [];
+    }
+
     /** @param array<string, mixed> $properties */
     public static function create(array $properties): self
     {
@@ -21,11 +26,6 @@ final class Properties implements \IteratorAggregate, \Countable
         }
 
         return $self;
-    }
-
-    public function __construct()
-    {
-        $this->properties = [];
     }
 
     public function appendProperty(Property $property): self

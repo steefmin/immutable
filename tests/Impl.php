@@ -16,8 +16,10 @@ final class Impl
     use Immutable;
 
     private string $prop1;
+
     /** @var int[] */
     private array $prop3;
+
     private int $prop2;
 
     /** @param int[] $prop3 */

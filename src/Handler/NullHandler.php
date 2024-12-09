@@ -10,20 +10,19 @@ use SteefMin\Immutable\ValueObject\Property\Properties;
 
 final class NullHandler implements HandlerInterface
 {
+    private function __construct()
+    {
+    }
+
     public static function create(): self
     {
         return new self();
-    }
-
-    private function __construct()
-    {
     }
 
     public function createsNewInstance(): bool
     {
         return false;
     }
-
 
     public function canProvideFor(MethodName $methodName, Arguments $arguments): bool
     {

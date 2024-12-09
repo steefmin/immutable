@@ -8,14 +8,14 @@ final class ArgumentName
 {
     private string $name;
 
-    public static function create(string $name): self
-    {
-        return new self($name);
-    }
-
     private function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    public static function create(string $name): self
+    {
+        return new self($name);
     }
 
     public function equals(self $other): bool
