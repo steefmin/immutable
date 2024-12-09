@@ -6,13 +6,11 @@ namespace SteefMin\Tests\Immutable;
 
 use SteefMin\Immutable\Immutable;
 
-/**
- * @method self withProp1(string $prop1)
- * @method self withProp2(int $prop2)
- */
-final class Impl
+final class ImplWithOwnCallMagicMethod
 {
-    use Immutable;
+    use Immutable {
+        __call as protected __callTrait;
+    }
 
     private readonly string $prop1;
 
@@ -30,6 +28,12 @@ final class Impl
         $this->prop1 = $prop1;
         $this->prop2 = $prop2;
         $this->prop3 = $prop3;
+    }
+
+    /** @param array<int, mixed> $args */
+    public function __call(string $name, array $args): self
+    {
+        return $this->__calltrait($name, $args);
     }
 
     public function getProp1(): string

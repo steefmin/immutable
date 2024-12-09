@@ -5,15 +5,10 @@ declare(strict_types=1);
 namespace SteefMin\Immutable;
 
 use BadMethodCallException;
-use SteefMin\Immutable\Handler\Resolver;
 use SteefMin\Immutable\ValueObject\Argument\Arguments;
-use SteefMin\Immutable\ValueObject\Method\MethodName;
-use SteefMin\Immutable\ValueObject\Property\Properties;
 
 /**
  * @immutable
- * @template-covariant TProps of array<string, mixed>
- *
  * @method static with(string $propertyName, mixed $value)
  */
 trait Immutable
@@ -24,23 +19,11 @@ trait Immutable
      */
     public function __call(string $name, array $args): static
     {
-        $resolver = Resolver::create();
-        $methodName = MethodName::create($name);
-        $methodArguments = Arguments::create($args);
+        $callHandler = CallHandler::create($name, $args, get_object_vars($this));
 
-        $handler = $resolver->resolve($methodName, $methodArguments);
-
-        if ($handler->createsNewInstance()) {
-            $properties = Properties::create(get_object_vars($this));
-
-            /** @var TProps $instanceArguments */
-            $instanceArguments = $handler
-                ->getNewInstanceArguments($properties, $methodName, $methodArguments)
-                ->toList();
-
-            return new self(...$instanceArguments);
-        }
-
-        throw new BadMethodCallException();
+        return $callHandler(
+            fn (Arguments $arguments) => new static(...$arguments->toList()), // @phpstan-ignore argument.type
+            fn () => throw new BadMethodCallException(),
+        );
     }
 }
