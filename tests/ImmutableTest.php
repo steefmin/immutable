@@ -19,6 +19,8 @@ final class ImmutableTest extends TestCase
 
         $actual = $subject->withProp1('b');
 
+        self::assertInstanceOf(Impl::class, $actual);
+
         self::assertSame('a', $subject->getProp1());
         self::assertSame(1, $subject->getProp2());
 
@@ -37,6 +39,8 @@ final class ImmutableTest extends TestCase
 
         $actual = $subject->withProp2(3);
 
+        self::assertInstanceOf(Impl::class, $actual);
+
         self::assertSame('a', $subject->getProp1());
         self::assertSame(1, $subject->getProp2());
 
@@ -54,6 +58,8 @@ final class ImmutableTest extends TestCase
         self::assertEquals($subject, $clone);
 
         $actual = $subject->with('prop1', 'b');
+
+        self::assertInstanceOf(Impl::class, $actual);
 
         self::assertSame('a', $subject->getProp1());
         self::assertSame(1, $subject->getProp2());
