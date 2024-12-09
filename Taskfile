@@ -72,6 +72,7 @@ function task:fix {
 function task:unit { ## Run unit test suite
 	./vendor/bin/phpunit -d memory_limit=1G tests
 }
+
 function task:stan { ## Run unit test suite
 	./vendor/bin/phpstan analyse --configuration dev/phpstan/phpstan.neon
 }

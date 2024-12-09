@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$minimumVersion = file_get_contents('minimum_php_version');
+$minimumVersion = trim(file_get_contents('minimum_php_version'), PHP_EOL);
 
 $template = <<<TEMPLATE
 php $minimumVersion.0
