@@ -11,6 +11,8 @@ use SteefMin\Immutable\ValueObject\Property\Properties;
 /**
  * @immutable
  * @template-covariant TProps of array<string, mixed>
+ *
+ * @method static with(string $propertyName, mixed $value)
  */
 trait Immutable
 {
