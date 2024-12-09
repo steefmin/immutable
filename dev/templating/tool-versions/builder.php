@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-$branch = exec('git rev-parse --abbrev-ref HEAD');
+$minimumVersion = file_get_contents('minimum_php_version');
 
 $template = <<<TEMPLATE
-php $branch.0
+php $minimumVersion.0
 
 TEMPLATE;
 

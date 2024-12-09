@@ -12,7 +12,7 @@ use SteefMin\Immutable\Immutable;
  */
 final class Impl
 {
-    /** @use Immutable<self> */
+    /** @use Immutable<self, array{0: string, 1: int}> */
     use Immutable;
 
     private string $prop1;

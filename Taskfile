@@ -51,15 +51,6 @@ function templating:.tool-versions {
   php ./dev/templating/tool-versions/builder.php
 }
 
-function task:merge-up {
-  PREVIOUS_VERSION=$(git rev-parse --abbrev-ref HEAD)
-  git checkout $1
-  task:update
-  git add composer.lock
-  git merge --no-ff "$PREVIOUS_VERSION"
-  git push
-}
-
 # =========================================================
 ## Tests
 # =========================================================
