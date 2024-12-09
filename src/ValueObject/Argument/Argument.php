@@ -8,17 +8,14 @@ final class Argument
 {
     private ArgumentName $name;
 
-    /** @var mixed */
-    private $value;
+    private mixed $value;
 
-    /** @param mixed $value */
-    public static function create(string $name, $value): self
+    public static function create(string $name, mixed $value): self
     {
         return new self(ArgumentName::create($name), $value);
     }
 
-    /** @param mixed $value */
-    private function __construct(ArgumentName $name, $value)
+    private function __construct(ArgumentName $name, mixed $value)
     {
         $this->name = $name;
         $this->value = $value;
@@ -29,8 +26,7 @@ final class Argument
         return $this->name;
     }
 
-    /** @return mixed */
-    public function value()
+    public function value(): mixed
     {
         return $this->value;
     }

@@ -8,19 +8,16 @@ final class Property
 {
     private PropertyName  $propertyName;
 
-    /** @var mixed */
-    private $value;
+    private mixed $value;
 
-    /** @param mixed $value */
-    public static function create(string $propertyName, $value): self
+    public static function create(string $propertyName, mixed $value): self
     {
         return new self(PropertyName::create($propertyName), $value);
     }
 
-    /** @param mixed $value */
     private function __construct(
         PropertyName  $propertyName,
-        $value
+        mixed $value
     ) {
         $this->propertyName = $propertyName;
         $this->value = $value;
@@ -31,8 +28,7 @@ final class Property
         return $this->propertyName;
     }
 
-    /** @return mixed */
-    public function value()
+    public function value(): mixed
     {
         return $this->value;
     }

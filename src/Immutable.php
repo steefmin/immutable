@@ -20,10 +20,9 @@ trait Immutable
     /**
      * Implements all with<PropertyName> methods on the class that uses this trait
      * @param array<int, mixed> $args
-     * @template K as key-of<TProps>
      * @return TClass
      */
-    public function __call(string $name, $args): self
+    public function __call(string $name, array $args): self
     {
         $resolver = Resolver::create();
         $methodName = MethodName::create($name);
@@ -33,13 +32,11 @@ trait Immutable
 
         if ($handler->createsNewInstance()) {
             $props = (new ReflectionClass($this))->getProperties();
-            /** @var string[] $propertyKeys */
+
             $propertyKeys = array_map(fn(ReflectionProperty $property) => $property->getName(), $props);
-            /** @var array<mixed> $propertyValues */
             $propertyValues = array_values(get_object_vars($this));
 
             $properties = array_combine($propertyKeys, $propertyValues);
-            assert(is_array($properties));
             $properties = Properties::create($properties);
 
             /** @var TProps $instanceArguments */
